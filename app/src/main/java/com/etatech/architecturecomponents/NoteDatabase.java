@@ -1,26 +1,29 @@
 package com.etatech.architecturecomponents;
 
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
+import android.arch.persistence.room.Database;
 import android.arch.persistence.room.DatabaseConfiguration;
 import android.arch.persistence.room.InvalidationTracker;
+import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.content.Context;
 import android.support.annotation.NonNull;
 
-public class NoteDatabase extends RoomDatabase {
-    @NonNull
-    @Override
-    protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration config) {
-        return null;
+@Database(entities = {Note.class}, version = 1)
+public abstract class NoteDatabase extends RoomDatabase {
+
+    public static NoteDatabase instances ;
+
+    public abstract NoteDao noteDao();
+
+    public static synchronized NoteDatabase getInstance(Context context){
+        if (instances==null){
+            instances = Room.databaseBuilder(context.getApplicationContext(),
+            NoteDatabase.class,"note_database")
+                    .fallbackToDestructiveMigration()
+                    .build();
+        }
+        return instances;
     }
 
-    @NonNull
-    @Override
-    protected InvalidationTracker createInvalidationTracker() {
-        return null;
-    }
-
-    @Override
-    public void clearAllTables() {
-
-    }
 }
