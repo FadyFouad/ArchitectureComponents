@@ -1,17 +1,20 @@
 package com.etatech.architecturecomponents;
 
 import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
+//import androidx.annotation.NonNull;
+//import androidx.lifecycle.AndroidViewModel;
+//import androidx.lifecycle.LiveData;
 
 public class NoteViewModel extends AndroidViewModel {
 
     private NoteRepository repository ;
-    private LiveData<List<Note>>data;
+    private LiveData<List<Note>> data;
 
     public NoteViewModel(@NonNull Application application) {
         super(application);
